@@ -385,4 +385,344 @@
         <p class="font-bold text-slate-800">📌 ขั้นตอนการติดตั้งสคริปต์ใน Google Sheets:</p>
         <ol class="list-decimal list-inside space-y-1 leading-relaxed">
           <li>สร้าง Google Sheet แล้วไปที่เมนู <strong>ส่วนขยาย (Extensions) > Apps Script</strong></li>
-          <li>วางโค้ดในไฟล์ 
+          <li>วางโค้ดในไฟล์ .gs``` แล้วกดเรียกใช้ฟังก์ชัน 
+ หนึ่งครั้งเพื่อสร้างตาราง</li>
+              <li>กด <strong>ทำให้ใช้งานได้ (Deploy) > รายการทำให้ใช้งานได้ใหม่ (New deployment)</strong> เลือกประเภท <strong>เว็บแอป (Web app)</strong></li>
+              <li>กำหนด <em>"ผู้มีสิทธิ์เข้าถึง: ทุกคน (Anyone)"</em> แล้วกด Deploy</li>
+              <li>นำ URL ที่ได้รับมาใส่ในช่องด้านบนนี้</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-400">
+    ระบบพัฒนาและประกันคุณภาพหลักสูตรระดับอุดมศึกษาตามเกณฑ์ AUN-QA Version 4.0 | หน้าหลัก (Home)
+  </footer>
+
+  <!-- ================= JAVASCRIPT ================= -->
+  <script>
+    // 1. Initial State Data (จำลองโครงสร้างเดียวกับ WeWeb Table Views)
+    const criteriaData = [
+      { num: 1, shortName: "ELOs", nameTh: "ผลลัพธ์การเรียนรู้ที่คาดหวัง", nameEn: "Expected Learning Outcomes (ELOs)", score: 4.5, status: "ผ่านการรับรอง", evidence: "มีการกำหนด ELOs ครอบคลุมทั้ง Generic และ Specific สอดคล้องกับความต้องการของผู้มีส่วนได้เสียทุกกลุ่ม" },
+      { num: 2, shortName: "โครงสร้างหลักสูตร", nameTh: "โครงสร้างและเนื้อหาหลักสูตร", nameEn: "Programme Structure and Content", score: 4.2, status: "ผ่านการรับรอง", evidence: "โครงสร้างหลักสูตรสอดคล้องกับเกณฑ์มาตรฐาน และมีการจัดทำ Curriculum Mapping สอดคล้องกับ ELOs ทุกข้อ" },
+      { num: 3, shortName: "การเรียนการสอน", nameTh: "วิธีจัดการเรียนการสอน", nameEn: "Teaching and Learning Approach", score: 4.0, status: "ผ่านเกณฑ์คุณภาพ", evidence: "เน้น Student-Centered Learning, Active Learning และเสริมสร้างทักษะการเรียนรู้ตลอดชีวิต (Lifelong Learning)" },
+      { num: 4, shortName: "การประเมินผู้เรียน", nameTh: "การประเมินผู้เรียน", nameEn: "Student Assessment", score: 4.0, status: "ผ่านเกณฑ์คุณภาพ", evidence: "ใช้ Rubric Score ในการประเมิน และมีการทวนสอบผลสัมฤทธิ์ระดับรายวิชา (CLOs/ELOs) ทุกภาคการศึกษา" },
+      { num: 5, shortName: "บุคลากรสายวิชาการ", nameTh: "คุณภาพบุคลากรสายวิชาการ", nameEn: "Academic Staff", score: 4.8, status: "ดีเด่น", evidence: "อาจารย์ผู้รับผิดชอบหลักสูตรมีวุฒิปริญญาเอก 85% และมีผลงานทางวิชาการตีพิมพ์ระดับนานาชาติอย่างต่อเนื่อง" },
+      { num: 6, shortName: "สนับสนุนนักศึกษา", nameTh: "การบริการและสนับสนุนนักศึกษา", nameEn: "Student Support Services", score: 4.2, status: "ผ่านการรับรอง", evidence: "มีระบบอาจารย์ที่ปรึกษา กิจกรรมเตรียมความพร้อมสู่สายอาชีพ และการให้คำปรึกษาทางวิชาการและสุขภาพจิต" },
+      { num: 7, shortName: "สิ่งอำนวยความสะดวก", nameTh: "สิ่งอำนวยความสะดวกและโครงสร้างพื้นฐาน", nameEn: "Facilities and Infrastructure", score: 4.4, status: "ผ่านการรับรอง", evidence: "ห้องปฏิบัติการคอมพิวเตอร์และ Server ประสิทธิภาพสูง พร้อมระบบเครือข่ายและระบบยืม-คืนอุปกรณ์ที่ทันสมัย" },
+      { num: 8, shortName: "ผลผลิตและผลลัพธ์", nameTh: "ผลผลิตและผลลัพธ์", nameEn: "Output and Outcomes", score: 4.9, status: "ดีเด่น", evidence: "บัณฑิตมีอัตราการได้งานทำ 94% ภายใน 1 ปี และได้รับความพึงพอใจจากผู้ประกอบการในระดับดีมาก" }
+    ];
+
+    const eloData = [
+      { code: "ELO 1", title: "ประยุกต์ใช้ความรู้ด้านวิทยาการคอมพิวเตอร์ในการวิเคราะห์และออกแบบระบบซอฟต์แวร์ที่ซับซ้อนได้", desc: "ผู้เรียนสามารถวิเคราะห์ปัญหาทางธุรกิจ ออกแบบ Architecture และเลือกใช้ขั้นตอนวิธีได้อย่างเหมาะสมตามหลักวิศวกรรมซอฟต์แวร์", type: "Specific", stakeholder: "ผู้ประกอบการซอฟต์แวร์และตลาดแรงงาน" },
+      { code: "ELO 2", title: "พัฒนาโปรแกรมและแอปพลิเคชันโดยใช้สถาปัตยกรรมและเทคโนโลยีสารสนเทศสมัยใหม่", desc: "มีทักษะในการเขียนโปรแกรมระดับ Full-stack, การใช้งาน Cloud Computing, และการเชื่อมต่อ API อย่างมีประสิทธิภาพและปลอดภัย", type: "Specific", stakeholder: "องค์กรธุรกิจและอุตสาหกรรมดิจิทัล" },
+      { code: "ELO 3", title: "ทำงานร่วมกับผู้อื่นในสังคมพหุวัฒนธรรมและแสดงภาวะผู้นำทางวิชาชีพ", desc: "สามารถทำงานเป็นทีมตามระเบียบวิธี Agile/Scrum สื่อสารและประสานงานกับผู้ที่มีความหลากหลายทางความคิดและวัฒนธรรมได้", type: "Generic", stakeholder: "สังคมและสมาคมวิชาชีพ" },
+      { code: "ELO 4", title: "สื่อสารภาษาอังกฤษและนำเสนอผลงานทางเทคโนโลยีสารสนเทศอย่างมีประสิทธิภาพ", desc: "สามารถอ่านเอกสารทางเทคนิคภาษาอังกฤษ นำเสนอผลงานต่อผู้บริหารและผู้ใช้ และเขียนรายงานเชิงวิชาชีพได้อย่างชัดเจน", type: "Generic", stakeholder: "มาตรฐานสากลและผู้ใช้บัณฑิต" },
+      { code: "ELO 5", title: "ยึดมั่นในจริยธรรม จรรยาบรรณวิชาชีพ และกฎหมายที่เกี่ยวข้องกับคอมพิวเตอร์", desc: "ตระหนักถึงผลกระทบของเทคโนโลยีต่อสังคม ปฏิบัติตาม พ.ร.บ. คอมพิวเตอร์ และกฎหมายคุ้มครองข้อมูลส่วนบุคคล (PDPA)", type: "Generic", stakeholder: "สังคม ชุมชน และกฎหมาย" },
+      { code: "ELO 6", title: "มีความใฝ่รู้และสามารถพัฒนาตนเองทางวิชาการอย่างต่อเนื่องตลอดชีวิต", desc: "มีทักษะการเรียนรู้ด้วยตนเอง ติดตามวิทยาการคอมพิวเตอร์และปัญญาประดิษฐ์ที่เปลี่ยนแปลงอย่างรวดเร็วได้สม่ำเสมอ", type: "Generic", stakeholder: "มหาวิทยาลัยและการศึกษาต่อระดับบัณฑิตศึกษา" }
+    ];
+
+    const userData = [
+      { id: "U001", name: "ผู้ดูแลระบบ กลาง", email: "admin@university.ac.th", dept: "สำนักประกันคุณภาพ", role: "Admin" },
+      { id: "U002", name: "ศ.ดร.สมชาย ใจดี", email: "dean@university.ac.th", dept: "คณะวิทยาศาสตร์", role: "Dean" },
+      { id: "U003", name: "รศ.ดร.วิชัย เก่งกาจ", email: "chair@university.ac.th", dept: "ภาควิชาวิทยาการคอมพิวเตอร์", role: "Program Chair" },
+      { id: "U004", name: "รศ.ดร.มนตรี ปัญญาดี", email: "depthead@university.ac.th", dept: "ภาควิชาวิทยาการคอมพิวเตอร์", role: "Dept Head" },
+      { id: "U005", name: "ผศ.ดร.กานดา สอนดี", email: "faculty@university.ac.th", dept: "ภาควิชาวิทยาการคอมพิวเตอร์", role: "Faculty" },
+      { id: "U006", name: "อ.ดร.วีระ ขยันยิ่ง", email: "instructor@university.ac.th", dept: "ภาควิชาวิทยาการคอมพิวเตอร์", role: "Instructor" },
+      { id: "U007", name: "นายสมศักดิ์ ขยันเรียน", email: "student@university.ac.th", dept: "ภาควิชาวิทยาการคอมพิวเตอร์", role: "Student" }
+    ];
+
+    let selectedCriterionNum = 1;
+    let selectedScoreVal = 4;
+
+    // 2. Tab Navigation Function
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      const activeSection = document.getElementById('tab-' + tabId);
+      if (activeSection) activeSection.classList.remove('hidden');
+
+      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+        btn.classList.remove('bg-emerald-50', 'text-emerald-800', 'font-bold', 'border', 'border-emerald-100');
+        btn.classList.add('text-slate-600', 'font-semibold');
+      });
+
+      const activeBtn = document.getElementById('nav-' + tabId);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-emerald-50', 'text-emerald-800', 'font-bold', 'border', 'border-emerald-100');
+        activeBtn.classList.remove('text-slate-600');
+      }
+    }
+
+    // 3. Role Switcher Function
+    function switchRole(role) {
+      const u = userData.find(item => item.role === role) || userData[2];
+
+      // Update User Cards
+      document.getElementById('topRoleBadge').innerText = u.role;
+      document.getElementById('sideUserName').innerText = u.name;
+      document.getElementById('sideUserRole').innerText = u.role;
+      document.getElementById('sideDeptText').innerHTML = `<span>🏢</span> ${u.dept}`;
+
+      const initials = u.role.slice(0, 2).toUpperCase();
+      document.getElementById('topAvatar').innerText = initials;
+      document.getElementById('sideAvatar').innerText = initials;
+
+      // Restrict Admin tab
+      const navUsersBtn = document.getElementById('nav-users');
+      if (role === 'Admin') {
+        navUsersBtn.classList.remove('hidden');
+      } else {
+        navUsersBtn.classList.add('hidden');
+        if (!document.getElementById('tab-users').classList.contains('hidden')) {
+          switchTab('dashboard');
+        }
+      }
+    }
+
+    // 4. Render Dashboard List
+    function renderDashboardList() {
+      const container = document.getElementById('criteriaDashboardList');
+      let sum = 0;
+      container.innerHTML = criteriaData.map(c => {
+        sum += c.score;
+        const percent = Math.min(100, Math.round((c.score / 7.0) * 100));
+        return `
+          <div class="p-4 rounded-xl border border-slate-100 hover:border-emerald-200 transition bg-slate-50/60 space-y-2">
+            <div class="flex flex-wrap justify-between items-center gap-2">
+              <div class="flex items-center gap-2.5">
+                <span class="w-6 h-6 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold text-xs shadow-2xs">${c.num}</span>
+                <span class="font-bold text-slate-800 text-xs sm:text-sm">${c.nameTh}</span>
+                <span class="text-[11px] text-slate-400 hidden sm:inline">(${c.nameEn})</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded">${c.score.toFixed(1)} / 7.0</span>
+                <span class="text-[11px] font-semibold text-slate-600 bg-white border border-slate-200 px-2 py-0.5 rounded">${c.status}</span>
+              </div>
+            </div>
+            <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+              <div class="bg-emerald-600 h-2 rounded-full transition-all duration-500" style="width: ${percent}%"></div>
+            </div>
+            <p class="text-[11px] text-slate-600">
+              <strong class="text-slate-700 font-semibold">📌 สรุปหลักฐาน:</strong> ${c.evidence}
+            </p>
+          </div>
+        `;
+      }).join('');
+
+      const avg = (sum / criteriaData.length).toFixed(2);
+      document.getElementById('dashAvgScore').innerHTML = `${avg} <span class="text-xs font-normal text-slate-400">/ 7.0</span>`;
+    }
+
+    // 5. Render ELOs Repeater
+    function renderEloList() {
+      const container = document.getElementById('eloListContainer');
+      container.innerHTML = eloData.map(e => `
+        <div class="p-4 rounded-xl border border-slate-100 hover:border-emerald-200 transition bg-slate-50/50 space-y-2">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 bg-emerald-100/80 text-emerald-800 rounded-md font-bold text-xs">${e.code}</span>
+              <h4 class="text-xs sm:text-sm font-bold text-slate-900">${e.title}</h4>
+            </div>
+            <span class="px-2.5 py-0.5 rounded text-xs font-semibold ${e.type === 'Specific' ? 'bg-blue-50 text-blue-700 border border-blue-200' : 'bg-purple-50 text-purple-700 border border-purple-200'}">
+              ${e.type} ELO
+            </span>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">${e.desc}</p>
+          <div class="pt-1 flex items-center gap-1.5 text-[11px] text-slate-500">
+            <span class="font-semibold text-slate-700">🎯 ตอบสนองความต้องการ:</span> ${e.stakeholder}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // 6. Render Assessment Form Controls
+    function renderAssessmentControls() {
+      // 8 Criteria selector buttons
+      const btnGrid = document.getElementById('assessmentCritButtons');
+      btnGrid.innerHTML = criteriaData.map(c => `
+        <button type="button" onclick="selectAssessmentCriterion(${c.num})" id="critBtn-${c.num}" class="crit-btn p-2 rounded-xl border text-xs font-semibold transition text-left flex items-center gap-2 ${c.num === selectedCriterionNum ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'}">
+          <span class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${c.num === selectedCriterionNum ? 'bg-white text-emerald-800' : 'bg-slate-100 text-slate-600'}">${c.num}</span>
+          <span class="truncate">เกณฑ์ ${c.num}: ${c.shortName}</span>
+        </button>
+      `).join('');
+
+      // 7 Score buttons
+      const scoreLabels = [
+        "1 ไม่เพียงพออย่างยิ่ง",
+        "2 ไม่เพียงพอ",
+        "3 เกือบเพียงพอ",
+        "4 เพียงพอตามเกณฑ์",
+        "5 ดีกว่าเกณฑ์",
+        "6 Best Practice",
+        "7 World-class"
+      ];
+      const scoreGrid = document.getElementById('assessmentScoreButtons');
+      scoreGrid.innerHTML = scoreLabels.map((lbl, idx) => {
+        const val = idx + 1;
+        return `
+          <button type="button" onclick="selectAssessmentScore(${val})" id="scoreBtn-${val}" class="score-btn p-2 rounded-xl border text-xs font-semibold transition text-center ${val === selectedScoreVal ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'}">
+            ${lbl}
+          </button>
+        `;
+      }).join('');
+
+      loadCriterionToForm(selectedCriterionNum);
+    }
+
+    function selectAssessmentCriterion(num) {
+      selectedCriterionNum = num;
+      document.querySelectorAll('.crit-btn').forEach(btn => {
+        btn.className = "crit-btn p-2 rounded-xl border text-xs font-semibold transition text-left flex items-center gap-2 bg-white text-slate-700 border-slate-200 hover:bg-slate-50";
+      });
+      const activeBtn = document.getElementById('critBtn-' + num);
+      if (activeBtn) {
+        activeBtn.className = "crit-btn p-2 rounded-xl border text-xs font-semibold transition text-left flex items-center gap-2 bg-emerald-600 text-white border-emerald-600 shadow-xs";
+      }
+      loadCriterionToForm(num);
+    }
+
+    function selectAssessmentScore(score) {
+      selectedScoreVal = score;
+      document.querySelectorAll('.score-btn').forEach(btn => {
+        btn.className = "score-btn p-2 rounded-xl border text-xs font-semibold transition text-center bg-white text-slate-700 border-slate-200 hover:bg-slate-50";
+      });
+      const activeBtn = document.getElementById('scoreBtn-' + score);
+      if (activeBtn) {
+        activeBtn.className = "score-btn p-2 rounded-xl border text-xs font-semibold transition text-center bg-emerald-600 text-white border-emerald-600 shadow-xs";
+      }
+    }
+
+    function loadCriterionToForm(num) {
+      const c = criteriaData.find(item => item.num === num);
+      if (c) {
+        document.getElementById('currentCritHeading').innerText = `เกณฑ์ ${c.num}: ${c.nameTh}`;
+        document.getElementById('currentCritSub').innerText = c.nameEn;
+        document.getElementById('currentCritScore').innerText = `${c.score.toFixed(1)} / 7.0`;
+        document.getElementById('assessmentEvidenceInput').value = c.evidence;
+        selectAssessmentScore(Math.round(c.score));
+      }
+    }
+
+    // 7. Save Assessment Function
+    function saveAssessment() {
+      const c = criteriaData.find(item => item.num === selectedCriterionNum);
+      if (!c) return;
+
+      const score = selectedScoreVal;
+      const evidence = document.getElementById('assessmentEvidenceInput').value;
+
+      c.score = score;
+      c.evidence = evidence;
+      c.status = score >= 4 ? "ผ่านเกณฑ์คุณภาพ" : "ต้องปรับปรุง";
+
+      renderDashboardList();
+      loadCriterionToForm(selectedCriterionNum);
+
+      const gasUrl = localStorage.getItem('AUN_GAS_URL');
+      if (gasUrl) {
+        fetch(gasUrl, {
+          method: 'POST',
+          body: JSON.stringify({
+            action: 'saveCriterion',
+            data: {
+              curriculumId: 'CURR-001',
+              criterionNumber: c.num,
+              nameTh: c.nameTh,
+              score: score,
+              evidence: evidence,
+              updatedBy: document.getElementById('sideUserName').innerText,
+              status: c.status
+            }
+          })
+        }).then(res => res.json())
+          .then(data => alert('✅ บันทึกและซิงค์ข้อมูลกับ Google Sheets สำเร็จเรียบร้อย!'))
+          .catch(err => alert('เกิดข้อผิดพลาดในการเชื่อมต่อ Google Sheet: ' + err));
+      } else {
+        alert(`✅ บันทึกเกณฑ์ที่ ${c.num} สำเร็จ (คะแนน: ${score}/7.0)\n\nหากต้องการเชื่อมต่อกับ Google Sheet จริง กรุณานำ Web App URL ของ Code.gs มาใส่ที่แท็บ "⚙️ การเชื่อมต่อ Google Sheet"`);
+      }
+    }
+
+    // 8. Render Users Table
+    function renderUsersTable() {
+      const tbody = document.getElementById('userTableBody');
+      tbody.innerHTML = userData.map(u => `
+        <tr class="hover:bg-slate-50 transition">
+          <td class="py-3 px-3.5">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs">
+                ${u.role.slice(0, 2).toUpperCase()}
+              </div>
+              <div>
+                <p class="font-bold text-slate-800">${u.name}</p>
+                <p class="text-[11px] text-slate-400 font-mono">${u.email}</p>
+              </div>
+            </div>
+          </td>
+          <td class="py-3 px-3.5 text-slate-600 font-medium">${u.dept}</td>
+          <td class="py-3 px-3.5">
+            <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+              ${u.role}
+            </span>
+          </td>
+          <td class="py-3 px-3.5 text-right">
+            <button onclick="simulateRoleDirect('${u.role}')" class="px-3 py-1 bg-slate-100 hover:bg-emerald-600 hover:text-white rounded-lg text-xs font-semibold text-slate-700 transition">
+              🎭 สลับเป็นสิทธิ์นี้
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function simulateRoleDirect(role) {
+      document.getElementById('roleSelector').value = role;
+      switchRole(role);
+      switchTab('dashboard');
+    }
+
+    // 9. GAS URL Config
+    function saveGasUrl() {
+      const url = document.getElementById('gasUrlInput').value.trim();
+      localStorage.setItem('AUN_GAS_URL', url);
+      const statusEl = document.getElementById('connectionStatus');
+      statusEl.innerText = "✅ บันทึก Web App URL สำเร็จ!";
+      statusEl.className = "text-xs font-bold text-emerald-600 mt-2";
+    }
+
+    function testGasConnection() {
+      const url = localStorage.getItem('AUN_GAS_URL');
+      if (!url) {
+        alert('กรุณากรอกและบันทึก Web App URL ก่อนทดสอบ');
+        return;
+      }
+      fetch(url + '?action=getInitialData')
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            alert('🎉 เชื่อมต่อ Google Sheet สำเร็จ! โครงสร้างตารางและข้อมูลเชื่อมโยงถูกต้อง');
+          } else {
+            alert('เชื่อมต่อได้แต่เกิดข้อผิดพลาด: ' + data.message);
+          }
+        })
+        .catch(err => alert('ไม่สามารถเชื่อมต่อได้ กรุณาตรวจสอบสิทธิ์ Anyone ในการ Deploy Web App: ' + err));
+    }
+
+    // 10. Initialization
+    window.addEventListener('DOMContentLoaded', () => {
+      renderDashboardList();
+      renderEloList();
+      renderAssessmentControls();
+      renderUsersTable();
+      switchRole('Program Chair');
+
+      const savedUrl = localStorage.getItem('AUN_GAS_URL');
+      if (savedUrl) {
+        document.getElementById('gasUrlInput').value = savedUrl;
+      }
+    });
+  </script>
+</body>
+</html>
