@@ -7,7 +7,7 @@
   <!-- Google Fonts: Sarabun -->
   <link rel="preconnect" href="[https://fonts.googleapis.com">](https://fonts.googleapis.com">)
   <link rel="preconnect" href="[https://fonts.gstatic.com"](https://fonts.gstatic.com") crossorigin>
-  <link href="[https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap"](https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap") rel="stylesheet">
+  <link href="[https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap"](https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap") rel="stylesheet">
   <!-- Tailwind CSS CDN -->
   <script src="[https://cdn.tailwindcss.com"></script>](https://cdn.tailwindcss.com"></script>)
   <script>
@@ -16,24 +16,6 @@
         extend: {
           fontFamily: {
             sans: ['Sarabun', 'sans-serif'],
-          },
-          colors: {
-            brand: {
-              50: '
-                    #ecfdf5',
-              100: '
-                    #d1fae5',
-              500: '
-                    #10b981',
-              600: '
-                    #059669',
-              700: '
-                    #047857',
-              800: '
-                    #065f46',
-              900: '
-                    #064e3b',
-            }
           }
         }
       }
@@ -43,257 +25,281 @@
     body { font-family: 'Sarabun', sans-serif; }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased">
 
-  <!-- ================= TOP HEADER ================= -->
+  <!-- ================= TOP NAVIGATION BAR ================= -->
   <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
+
+      <!-- Brand & Title -->
       <div class="flex items-center space-x-3.5">
-        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-600 to-teal-700 text-white flex items-center justify-center font-bold text-lg shadow-md tracking-wider">
-          QA
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-600 to-teal-700 text-white flex items-center justify-center font-extrabold text-base tracking-wider shadow-md">
+          AUN QA
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <h1 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">ระบบพัฒนาและจัดเก็บข้อมูลหลักสูตร</h1>
-            <span class="px-2 py-0.5 text-xs font-semibold bg-emerald-100 text-emerald-800 rounded-full border border-emerald-200">AUN-QA 4.0</span>
+            <h1 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">ระบบพัฒนาและจัดเก็บข้อมูลหลักสูตร (AUN-QA 4.0)</h1>
+            <span class="px-2 py-0.5 text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full">v4.0</span>
           </div>
-          <p class="text-xs text-slate-500 mt-0.5">ระบบประกันคุณภาพการศึกษาระดับอุดมศึกษา เชื่อมโยงฐานข้อมูล Google Sheet</p>
+          <p class="text-xs text-slate-500 mt-0.5">การประกันคุณภาพการศึกษาระดับอุดมศึกษาตามเกณฑ์มาตรฐานสากล เชื่อมโยง Google Sheet</p>
         </div>
       </div>
 
-      <!-- Quick Role Simulator -->
-      <div class="flex items-center gap-2.5 bg-slate-100/80 p-1.5 rounded-2xl border border-slate-200 text-xs sm:text-sm">
-        <span class="text-slate-600 font-medium pl-2 flex items-center gap-1.5">
-          <span>🎭</span> สลับสิทธิ์:
-        </span>
-        <select id="roleSelector" onchange="switchRole(this.value)" class="bg-white border border-slate-300 rounded-xl px-3 py-1.5 font-bold text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-2xs">
-          <option value="Admin">ผู้ดูแลระบบ (Admin)</option>
-          <option value="Dean">คณบดี (Dean)</option>
-          <option value="Dept Head">หัวหน้าภาควิชา (Dept Head)</option>
-          <option value="Program Chair" selected>ประธานหลักสูตร (Program Chair)</option>
-          <option value="Faculty">อาจารย์ประจำหลักสูตร (Faculty)</option>
-          <option value="Instructor">อาจารย์ผู้สอน (Instructor)</option>
-          <option value="Student">นิสิต / นักศึกษา (Student)</option>
-        </select>
+      <!-- Right Controls: Role Simulator & Active User -->
+      <div class="flex items-center gap-3">
+        <!-- Role Simulator -->
+        <div class="flex items-center gap-2 bg-slate-100/90 px-3 py-1.5 rounded-2xl border border-slate-200 text-xs sm:text-sm">
+          <span class="text-slate-600 font-semibold flex items-center gap-1">
+            <span>🎭</span> สลับสิทธิ์:
+          </span>
+          <select id="roleSelector" onchange="switchRole(this.value)" class="bg-white border border-slate-300 rounded-xl px-2.5 py-1 font-bold text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-2xs">
+            <option value="Admin">Admin (ผู้ดูแลระบบ)</option>
+            <option value="Dean">Dean (คณบดี)</option>
+            <option value="Dept Head">Dept Head (หัวหน้าภาค)</option>
+            <option value="Program Chair" selected>Program Chair (ประธานหลักสูตร)</option>
+            <option value="Faculty">Faculty (อาจารย์ประจำหลักสูตร)</option>
+            <option value="Instructor">Instructor (อาจารย์ผู้สอน)</option>
+            <option value="Student">Student (นิสิต/นักศึกษา)</option>
+          </select>
+        </div>
+
+        <!-- Active User Pill -->
+        <div class="hidden sm:flex items-center gap-2 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-2xl">
+          <div id="topAvatar" class="w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-xs">
+            PC
+          </div>
+          <span id="topRoleBadge" class="text-xs font-bold text-emerald-800">Program Chair</span>
+        </div>
       </div>
+
     </div>
   </header>
 
-  <!-- ================= MAIN CONTAINER ================= -->
+  <!-- ================= MAIN BODY CONTAINER ================= -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full grid grid-cols-1 md:grid-cols-4 gap-6">
 
-    <!-- ===== SIDEBAR NAVIGATION ===== -->
+    <!-- ===== LEFT SIDEBAR ===== -->
     <aside class="md:col-span-1 space-y-4">
       <!-- User Profile Card -->
       <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs">
         <div class="flex items-center gap-3 pb-3 border-b border-slate-100">
-          <div id="userAvatar" class="w-11 h-11 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-base shadow-inner">
+          <div id="sideAvatar" class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-lg shadow-inner">
             PC
           </div>
           <div class="overflow-hidden">
-            <h4 id="userName" class="text-sm font-bold text-slate-900 truncate">รศ.ดร.วิชัย เก่งกาจ</h4>
-            <span id="userBadge" class="inline-block px-2 py-0.5 text-xs rounded-md bg-emerald-100 text-emerald-800 font-semibold mt-0.5">Program Chair</span>
+            <h4 id="sideUserName" class="text-sm font-bold text-slate-900 truncate">รศ.ดร.วิชัย เก่งกาจ</h4>
+            <span id="sideUserRole" class="inline-block px-2 py-0.5 text-xs rounded-md bg-emerald-100 text-emerald-800 font-semibold mt-0.5">Program Chair</span>
           </div>
         </div>
 
-        <div class="pt-3 text-xs text-slate-500 space-y-1">
-          <p id="userDept">🏢 ภาควิชาวิทยาการคอมพิวเตอร์</p>
-          <p id="userCurriculum" class="text-emerald-700 font-medium">📋 หลักสูตร วท.บ. (รอบประเมิน 2567)</p>
+        <div class="pt-3 text-xs text-slate-500 space-y-1.5">
+          <p id="sideDeptText" class="flex items-start gap-1">
+            <span>🏢</span> ภาควิชาวิทยาการคอมพิวเตอร์ คณะวิทยาศาสตร์
+          </p>
+          <p class="text-emerald-700 font-medium flex items-center gap-1">
+            <span>📋</span> หลักสูตร วท.บ. (รอบประเมิน 2567)
+          </p>
         </div>
 
         <!-- Navigation Tabs -->
-        <nav class="mt-4 space-y-1.5" id="navLinks">
-          <button onclick="showTab('dashboard')" id="btn-dashboard" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition text-emerald-800 bg-emerald-50">
-            <span>📊</span> แดชบอร์ดภาพรวม 8 เกณฑ์
+        <nav class="mt-4 space-y-1.5" id="navContainer">
+          <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition text-emerald-800 bg-emerald-50 border border-emerald-100">
+            <span>📊</span> แดชบอร์ดภาพรวม
           </button>
-          <button onclick="showTab('curriculum')" id="btn-curriculum" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition text-slate-600 hover:bg-slate-100">
+          <button onclick="switchTab('curriculum')" id="nav-curriculum" class="nav-tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition text-slate-600 hover:bg-slate-100">
             <span>📚</span> ข้อมูลหลักสูตร & ELOs
           </button>
-          <button onclick="showTab('assessment')" id="btn-assessment" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition text-slate-600 hover:bg-slate-100">
+          <button onclick="switchTab('assessment')" id="nav-assessment" class="nav-tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition text-slate-600 hover:bg-slate-100">
             <span>📝</span> ประเมินตนเอง 8 เกณฑ์
           </button>
-          <button onclick="showTab('users')" id="btn-users" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition text-slate-600 hover:bg-slate-100">
+          <button onclick="switchTab('users')" id="nav-users" class="nav-tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition text-slate-600 hover:bg-slate-100">
             <span>👥</span> จัดการสิทธิ์ผู้ใช้ (Admin)
           </button>
-          <button onclick="showTab('settings')" id="btn-settings" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition text-slate-600 hover:bg-slate-100">
+          <button onclick="switchTab('settings')" id="nav-settings" class="nav-tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition text-slate-600 hover:bg-slate-100">
             <span>⚙️</span> การเชื่อมต่อ Google Sheet
           </button>
         </nav>
       </div>
 
-      <!-- Criteria Scale Info Box -->
-      <div class="bg-gradient-to-br from-slate-900 to-emerald-950 text-white rounded-2xl p-4 shadow-xs text-xs space-y-2">
-        <p class="font-bold text-sm text-emerald-300 flex items-center gap-1.5">
+      <!-- Score Scale Info Card -->
+      <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-4 shadow-xs text-xs space-y-2">
+        <p class="font-bold text-sm text-emerald-400 flex items-center gap-1.5">
           <span>🎯</span> เกณฑ์ประเมิน AUN-QA 4.0
         </p>
-        <p class="text-slate-300 leading-relaxed">
-          เกณฑ์คะแนน 1-7: 
+        <p class="text-slate-300 leading-relaxed text-[11px]">
 
-          • 1: ไม่เพียงพออย่างยิ่ง • 2: ไม่เพียงพอ 
+          • 1: ไม่เพียงพออย่างยิ่ง
 
-          • 3: เกือบเพียงพอ • <strong class="text-emerald-400">4: ผ่านเกณฑ์คุณภาพ</strong> 
+          • 2: ไม่เพียงพอ ต้องปรับปรุง
 
-          • 5: ดีกว่าเกณฑ์ • 6: ดีเด่น (Best Practice) 
+          • 3: เกือบเพียงพอ
+
+          • <strong class="text-emerald-400 font-bold">4: เพียงพอตามเกณฑ์ (เกณฑ์ผ่าน)</strong>
+
+          • 5: ดีกว่าเกณฑ์ที่คาดหวัง
+
+          • 6: ดีเด่นมาก (Best Practice)
 
           • 7: ยอดเยี่ยมระดับโลก (World-class)
         </p>
       </div>
     </aside>
 
-    <!-- ===== MAIN CONTENT TABS ===== -->
+    <!-- ===== MAIN CONTENT AREA ===== -->
     <main class="md:col-span-3 space-y-6">
 
-      <!-- ================= TAB 1: DASHBOARD ================= -->
-      <section id="tab-dashboard" class="space-y-6">
-        <!-- Top Stats Row -->
+      <!-- ================= 1. DASHBOARD TAB ================= -->
+      <section id="tab-dashboard" class="tab-content space-y-6">
+        <!-- 4 Stat Cards Grid -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <!-- Stat 1 -->
           <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
-            <span class="text-xs text-slate-500 font-medium">คะแนนเฉลี่ย 8 เกณฑ์</span>
-            <h3 class="text-2xl font-bold text-emerald-600 mt-1" id="dashAvgScore">4.38 <span class="text-xs font-normal text-slate-400">/ 7.0</span></h3>
-            <span class="text-[11px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-medium mt-1 inline-block">ผ่านเกณฑ์คุณภาพ</span>
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-xs text-slate-500 font-medium">คะแนนเฉลี่ย 8 เกณฑ์</span>
+              <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">ผ่านเกณฑ์คุณภาพ</span>
+            </div>
+            <h3 class="text-2xl font-extrabold text-emerald-600" id="dashAvgScore">4.38 <span class="text-xs font-normal text-slate-400">/ 7.0</span></h3>
+            <p class="text-[11px] text-slate-500 mt-1">ระดับ: เพียงพอตามที่คาดหวังขึ้นไป</p>
           </div>
 
+          <!-- Stat 2 -->
           <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
-            <span class="text-xs text-slate-500 font-medium">เกณฑ์ที่ประเมินแล้ว</span>
-            <h3 class="text-2xl font-bold text-slate-800 mt-1" id="dashAssessedCount">8 / 8</h3>
-            <span class="text-[11px] text-blue-700 bg-blue-50 px-2 py-0.5 rounded font-medium mt-1 inline-block">ครบสมบูรณ์ 100%</span>
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-xs text-slate-500 font-medium">เกณฑ์ที่ประเมินแล้ว</span>
+              <span class="text-[10px] font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md">ครบ 100%</span>
+            </div>
+            <h3 class="text-2xl font-extrabold text-slate-800">8 / 8 เกณฑ์</h3>
+            <p class="text-[11px] text-slate-500 mt-1">พร้อมส่งรายงานประเมิน SAR รอบนี้</p>
           </div>
 
+          <!-- Stat 3 -->
           <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
-            <span class="text-xs text-slate-500 font-medium">จำนวน ELOs ทั้งหมด</span>
-            <h3 class="text-2xl font-bold text-slate-800 mt-1">6 รายการ</h3>
-            <span class="text-[11px] text-purple-700 bg-purple-50 px-2 py-0.5 rounded font-medium mt-1 inline-block">4 Generic, 2 Specific</span>
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-xs text-slate-500 font-medium">จำนวน ELOs ทั้งหมด</span>
+              <span class="text-[10px] font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded-md">Generic & Specific</span>
+            </div>
+            <h3 class="text-2xl font-extrabold text-slate-800">6 รายการ</h3>
+            <p class="text-[11px] text-slate-500 mt-1">4 Generic ELOs, 2 Specific ELOs</p>
           </div>
 
+          <!-- Stat 4 -->
           <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
-            <span class="text-xs text-slate-500 font-medium">สถานะรายงาน (SAR)</span>
-            <h3 class="text-xs sm:text-sm font-bold text-amber-600 mt-2 truncate">รอคณบดีอนุมัติ</h3>
-            <span class="text-[11px] text-amber-700 bg-amber-50 px-2 py-0.5 rounded font-medium mt-1 inline-block">รอบประเมินปี 2567</span>
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-xs text-slate-500 font-medium">สถานะรายงาน SAR</span>
+              <span class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md">รอบปี 2567</span>
+            </div>
+            <h3 class="text-xs sm:text-sm font-bold text-amber-600 mt-1 truncate">รอคณบดีอนุมัติ</h3>
+            <p class="text-[11px] text-slate-500 mt-1">ผ่านการเห็นชอบจากกรรมการหลักสูตรแล้ว</p>
           </div>
         </div>
 
-        <!-- 8 Criteria Details List -->
+        <!-- Criteria Section Card -->
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs">
-          <div class="flex items-center justify-between mb-5 pb-3 border-b border-slate-100">
-            <div>
-              <h3 class="text-base font-bold text-slate-900">📊 ผลการประเมินตนเองแยกตาม 8 เกณฑ์ AUN-QA 4.0</h3>
-              <p class="text-xs text-slate-500">เกณฑ์เป้าหมายขั้นต่ำของการผ่านการรับรองคือระดับ 4.0</p>
-            </div>
-            <span class="text-xs bg-slate-100 text-slate-600 font-medium px-2.5 py-1 rounded-lg">8 เกณฑ์มาตรฐาน</span>
+          <div class="mb-5 pb-3 border-b border-slate-100">
+            <h3 class="text-base font-bold text-slate-900">📊 รายละเอียดคะแนนและสถานะ 8 เกณฑ์ AUN-QA 4.0</h3>
+            <p class="text-xs text-slate-500">เชื่อมโยงข้อมูลสดตามเกณฑ์ประเมินตนเอง (SAR) ของหลักสูตร</p>
           </div>
+
+          <!-- Criteria List Repeater -->
           <div class="space-y-4" id="criteriaDashboardList">
-            <!-- Dynamic Criteria bars loaded via JS -->
+            <!-- Dynamic elements loaded via JS -->
           </div>
         </div>
       </section>
 
-      <!-- ================= TAB 2: CURRICULUM & ELOS ================= -->
-      <section id="tab-curriculum" class="hidden space-y-6">
-        <!-- Curriculum Meta -->
+      <!-- ================= 2. CURRICULUM & ELOS TAB ================= -->
+      <section id="tab-curriculum" class="tab-content hidden space-y-6">
+        <!-- Curriculum Overview Card -->
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
           <div class="flex flex-wrap justify-between items-start gap-4">
-            <div class="flex items-center gap-3">
-              <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center text-2xl font-bold">
+            <div class="flex items-center gap-3.5">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-2xl font-bold shadow-2xs">
                 🎓
               </div>
               <div>
                 <div class="flex items-center gap-2">
-                  <span class="text-xs font-bold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-md">CS-2564</span>
-                  <span class="text-xs text-slate-500">หลักสูตรปรับปรุง พ.ศ. 2564</span>
+                  <span class="text-xs font-bold text-emerald-800 bg-emerald-100/70 px-2.5 py-0.5 rounded-md">CS-2564</span>
+                  <span class="text-xs font-medium text-slate-500">หลักสูตรปรับปรุง พ.ศ. 2564</span>
                 </div>
                 <h3 class="text-base sm:text-lg font-bold text-slate-900 mt-0.5">หลักสูตรวิทยาศาสตรบัณฑิต สาขาวิชาวิทยาการคอมพิวเตอร์</h3>
                 <p class="text-xs text-slate-500">Bachelor of Science Program in Computer Science</p>
               </div>
             </div>
-            <span class="px-3 py-1 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold rounded-full">
-              ● ได้รับการรับรองตามเกณฑ์ AUN-QA
-            </span>
+            <div class="flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-xs font-bold">
+              <span class="text-emerald-500">●</span> ได้รับการรับรองตามเกณฑ์ AUN-QA
+            </div>
           </div>
 
+          <!-- Meta Grid -->
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-100 text-xs">
             <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
-              <span class="text-slate-400 block mb-0.5">🏛️ คณะวิชา:</span>
+              <span class="text-slate-400 block mb-0.5">🏛️ คณะวิชา</span>
               <p class="font-bold text-slate-800">คณะวิทยาศาสตร์</p>
             </div>
             <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
-              <span class="text-slate-400 block mb-0.5">🏢 ภาควิชาที่รับผิดชอบ:</span>
-              <p class="font-bold text-slate-800">ภาควิชาวิทยาการคอมพิวเตอร์</p>
+              <span class="text-slate-400 block mb-0.5">🏢 ภาควิชาที่รับผิดชอบ</span>
+              <p class="font-bold text-slate-800">ภาควิชาวิท���าการคอมพิวเตอร์</p>
             </div>
             <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
-              <span class="text-slate-400 block mb-0.5">👤 ประธานหลักสูตร:</span>
+              <span class="text-slate-400 block mb-0.5">👤 ประธานหลักสูตร</span>
               <p class="font-bold text-slate-800">รศ.ดร.วิชัย เก่งกาจ</p>
             </div>
           </div>
         </div>
 
-        <!-- ELOs List -->
+        <!-- ELOs Section Card -->
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs">
-          <div class="flex items-center justify-between mb-4">
+          <div class="flex flex-wrap justify-between items-center gap-3 mb-4 pb-3 border-b border-slate-100">
             <div>
               <h3 class="text-base font-bold text-slate-900">🎯 ผลลัพธ์การเรียนรู้ที่คาดหวังของหลักสูตร (ELOs)</h3>
               <p class="text-xs text-slate-500">สอดคล้องตามเกณฑ์ AUN-QA Criterion 1 ทั้ง Specific และ Generic ELOs</p>
             </div>
             <div class="flex gap-2">
-              <span class="px-2.5 py-1 bg-blue-50 text-blue-700 text-xs font-bold rounded-lg">2 Specific</span>
-              <span class="px-2.5 py-1 bg-purple-50 text-purple-700 text-xs font-bold rounded-lg">4 Generic</span>
+              <span class="px-2.5 py-1 bg-blue-50 text-blue-700 border border-blue-200 text-xs font-bold rounded-lg">2 Specific ELOs</span>
+              <span class="px-2.5 py-1 bg-purple-50 text-purple-700 border border-purple-200 text-xs font-bold rounded-lg">4 Generic ELOs</span>
             </div>
           </div>
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs">
-              <thead class="bg-slate-50 text-slate-500 border-b border-slate-200">
-                <tr>
-                  <th class="py-3 px-3 font-semibold">รหัส ELO</th>
-                  <th class="py-3 px-3 font-semibold">คำอธิบายผลลัพธ์การเรียนรู้</th>
-                  <th class="py-3 px-3 font-semibold">ประเภท</th>
-                  <th class="py-3 px-3 font-semibold">ผู้มีส่วนได้เสีย (Stakeholders)</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-100" id="eloTableBody">
-                <!-- Loaded via JS -->
-              </tbody>
-            </table>
+
+          <!-- ELOs Repeater -->
+          <div class="space-y-3" id="eloListContainer">
+            <!-- Dynamic ELO Items -->
           </div>
         </div>
       </section>
 
-      <!-- ================= TAB 3: 8 CRITERIA ASSESSMENT FORM ================= -->
-      <section id="tab-assessment" class="hidden space-y-6">
+      <!-- ================= 3. ASSESSMENT TAB ================= -->
+      <section id="tab-assessment" class="tab-content hidden space-y-6">
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs">
-          <div class="flex flex-wrap items-center justify-between gap-4 mb-5 pb-3 border-b border-slate-100">
-            <div>
-              <h3 class="text-base font-bold text-slate-900">📝 บันทึกและประเมินตนเองตาม 8 เกณฑ์ AUN-QA 4.0</h3>
-              <p class="text-xs text-slate-500">เลือกลำดับเกณฑ์ ระบุคะแนน 1-7 และบันทึกหลักฐานเชิงประจักษ์</p>
-            </div>
-            <button onclick="saveCurrentCriterion()" class="px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold hover:bg-emerald-700 shadow-xs transition flex items-center gap-1.5">
-              <span>💾</span> บันทึกผลการประเมินตนเอง
-            </button>
+          <div class="mb-5 pb-3 border-b border-slate-100">
+            <h3 class="text-base font-bold text-slate-900">📝 บันทึกและประเมินตนเองตาม 8 เกณฑ์ AUN-QA 4.0</h3>
+            <p class="text-xs text-slate-500">เลือกเกณฑ์ที่ต้องการประเมิน ระบุคะแนน 1-7 และบันทึกหลักฐานเชิงประจักษ์</p>
           </div>
 
           <div class="space-y-5">
-            <!-- 1. Criterion Selector Buttons Grid -->
+            <!-- 1. Criterion Quick Selector Buttons -->
             <div>
               <label class="block text-xs font-bold text-slate-700 mb-2">1. เลือกเกณฑ์การประเมิน (Criterion 1 - 8):</label>
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="critButtonGrid">
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="assessmentCritButtons">
                 <!-- Buttons rendered via JS -->
               </div>
             </div>
 
-            <!-- Current Criterion Info Box -->
-            <div class="bg-emerald-50/60 border border-emerald-200 rounded-xl p-4 flex flex-wrap items-center justify-between gap-3">
+            <!-- Selected Criterion Info Box -->
+            <div class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4">
               <div>
-                <span class="text-xs font-bold text-emerald-800" id="critActiveName">เกณฑ์ที่ 1: ผลลัพธ์การเรียนรู้ที่คาดหวัง (ELOs)</span>
-                <p class="text-[11px] text-slate-600 mt-0.5" id="critActiveEnName">Expected Learning Outcomes</p>
+                <h4 class="text-sm font-bold text-emerald-900" id="currentCritHeading">เกณฑ์ 1: ผลลัพธ์การเรียนรู้ที่คาดหวัง (Expected Learning Outcomes - ELOs)</h4>
+                <p class="text-xs text-slate-600 mt-0.5" id="currentCritSub">Expected Learning Outcomes</p>
               </div>
               <div class="text-right">
-                <span class="text-xs text-slate-500 block">คะแนนปัจจุบัน:</span>
-                <span class="text-lg font-bold text-emerald-700" id="critCurrentScore">4.5 / 7.0</span>
+                <span class="text-xs text-slate-500 block">คะแนนปัจจุบันในระบบ:</span>
+                <span class="text-xl font-extrabold text-emerald-700" id="currentCritScore">4.5 / 7.0</span>
               </div>
             </div>
 
-            <!-- 2. Score Selector -->
+            <!-- 2. Score Pills Grid (1-7) -->
             <div>
               <label class="block text-xs font-bold text-slate-700 mb-2">2. เลือกระดับคะแนนประเมิน (AUN-QA Score 1 - 7):</label>
-              <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2" id="scorePillsGrid">
+              <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2" id="assessmentScoreButtons">
                 <!-- Score buttons 1-7 rendered via JS -->
               </div>
             </div>
@@ -303,37 +309,44 @@
               <label class="block text-xs font-bold text-slate-700 mb-1.5">
                 3. หลักฐานเชิงประจักษ์และการดำเนินการ (Evidence & Action Plan):
               </label>
-              <textarea id="critEvidenceInput" rows="5" class="w-full border border-slate-300 rounded-xl p-3 text-xs leading-relaxed focus:ring-2 focus:ring-emerald-500 focus:outline-none placeholder:text-slate-400" placeholder="ระบุหลักฐาน เช่น เล่ม มคอ.2, ตาราง Matrix ความสอดคล้อง ELOs กับรายวิชา, ผลสำรวจความพึงพอใจของนายจ้าง, บันทึกการประชุมกรรมการหลักสูตร..."></textarea>
+              <textarea id="assessmentEvidenceInput" rows="5" class="w-full border border-slate-300 rounded-xl p-3 text-xs leading-relaxed focus:ring-2 focus:ring-emerald-500 focus:outline-none placeholder:text-slate-400" placeholder="ระบุหลักฐาน เช่น เล่ม มคอ.2, ตาราง Matrix ความสอดคล้อง ELOs, ผลสำรวจความต้องการของผู้ใช้บัณฑิต..."></textarea>
             </div>
 
-            <div class="pt-2 flex justify-end">
-              <button onclick="saveCurrentCriterion()" class="px-5 py-2.5 bg-emerald-600 text-white rounded-xl text-xs font-bold hover:bg-emerald-700 shadow-md transition flex items-center gap-1.5">
-                <span>💾</span> บันทึกและซิงค์ข้อมูล
+            <!-- Action Row -->
+            <div class="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <p class="text-xs font-bold text-slate-800">✅ ยืนยันข้อมูลโดยคณะกรรมการประกันคุณภาพหลักสูตร</p>
+                <p class="text-[11px] text-slate-500">ระบบจะอัปเดตข้อมูลไปยังฐานข้อมูลและคำนวณคะแนนรวมบนแดชบอร์ดโดยอัตโนมัติ</p>
+              </div>
+              <button onclick="saveAssessment()" class="px-5 py-2.5 bg-emerald-600 text-white rounded-xl text-xs font-bold hover:bg-emerald-700 shadow-sm transition flex items-center gap-2">
+                <span>💾</span> บันทึกผลการประเมินตนเอง
               </button>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- ================= TAB 4: USER ROLES MANAGEMENT (ADMIN) ================= -->
-      <section id="tab-users" class="hidden space-y-6">
+      <!-- ================= 4. USERS TAB (ADMIN) ================= -->
+      <section id="tab-users" class="tab-content hidden space-y-6">
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs">
-          <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-100">
             <div>
               <h3 class="text-base font-bold text-slate-900">👥 ระบบจัดการผู้ใช้งานและกำหนดสิทธิ์ (User Roles & RBAC)</h3>
-              <p class="text-xs text-slate-500">รายชื่อผู้มีสิทธิ์ใช้งานในระบบประกันคุณภาพหลักสูตร</p>
+              <p class="text-xs text-slate-500">รายชื่อผู้มีสิทธิ์ใช้งานในระบบประกันคุณภาพหลักสูตรทั้ง 7 ระดับ</p>
             </div>
-            <span class="text-xs bg-purple-50 text-purple-700 font-bold px-2.5 py-1 rounded-lg">🛡️ สิทธิ์ผู้ดูแลระบบ (Admin)</span>
+            <span class="text-xs bg-purple-50 text-purple-700 border border-purple-200 font-bold px-3 py-1 rounded-xl">
+              🛡️ สิทธิ์ผู้ดูแลระบบ (Admin Control)
+            </span>
           </div>
 
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs">
               <thead class="bg-slate-50 text-slate-500 border-b border-slate-200">
                 <tr>
-                  <th class="py-3 px-3 font-semibold">ชื่อ - นามสกุล และอีเมล</th>
-                  <th class="py-3 px-3 font-semibold">สังกัด / ภาควิชา</th>
-                  <th class="py-3 px-3 font-semibold">บทบาทหน้าที่</th>
-                  <th class="py-3 px-3 font-semibold text-right">การจัดการ / สลับสิทธิ์</th>
+                  <th class="py-3 px-3.5 font-bold">ชื่อ - นามสกุล และอีเมล</th>
+                  <th class="py-3 px-3.5 font-bold">สังกัด / ภาควิชา</th>
+                  <th class="py-3 px-3.5 font-bold">บทบาทหน้าที่</th>
+                  <th class="py-3 px-3.5 font-bold text-right">การจัดการ / สลับสิทธิ์</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-100" id="userTableBody">
@@ -344,34 +357,15 @@
         </div>
       </section>
 
-      <!-- ================= TAB 5: SETTINGS / GOOGLE SHEET API ================= -->
-      <section id="tab-settings" class="hidden space-y-6">
+      <!-- ================= 5. SETTINGS TAB (GOOGLE SHEETS) ================= -->
+      <section id="tab-settings" class="tab-content hidden space-y-6">
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
           <div class="border-b border-slate-100 pb-3">
             <h3 class="text-base font-bold text-slate-900">⚙️ ตั้งค่าการเชื่อมต่อ Google Apps Script Web App</h3>
-            <p class="text-xs text-slate-500">นำ URL ที่ได้จากการ Deploy Web App ของไฟล์ Code.gs มาวางที่นี่เพื่อบันทึกและอ่านข้อมูลสดจาก Google Sheet</p>
+            <p class="text-xs text-slate-500">นำ URL ที่ได้จากการ Deploy Web App ของไฟล์ Code.gs มาบันทึกที่นี่เพื่อซิงค์ข้อมูลกับ Google Sheets</p>
           </div>
 
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Google Apps Script Web App URL:</label>
-            <input type="text" id="gasUrlInput" placeholder="[https://script.google.com/macros/s/AKfycbwju0PdoBXpso6Eq48Q4rcHIqJBYgVESIAvPgymOWhyCCDCOOx3AJgi4zQptiwesq7A/exec"](https://script.google.com/macros/s/.../exec") class="w-full border border-slate-300 rounded-xl p-3 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none font-mono">
-            <span class="text-[11px] text-slate-400 block mt-1">ตัวอย่าง: [https://script.google.com/macros/s/AKfycbx.../exec</span>](https://script.google.com/macros/s/AKfycbx.../exec</span>)
-          </div>
-
-          <div class="flex flex-wrap gap-3 pt-2">
-            <button onclick="saveGasUrl()" class="px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold hover:bg-emerald-700 transition shadow-xs">
-              บันทึกการตั้งค่า URL
-            </button>
-            <button onclick="testConnection()" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-xl text-xs font-bold hover:bg-slate-200 transition">
-              ทดสอบการเชื่อมต่อ Google Sheet
-            </button>
-          </div>
-
-          <div id="connectionStatus" class="text-xs font-semibold"></div>
-
-          <!-- Documentation note -->
-          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs text-slate-600 space-y-1.5 mt-4">
-            <p class="font-bold text-slate-800">📌 ขั้นตอนการสร้าง Web App ใน Google Sheets:</p>
-            <ol class="list-decimal list-inside space-y-1">
-              <li>เปิด Google Sheets แล้วไปที่ <strong>ส่วนขยาย (Extensions) > Apps Script</strong></li>
-              <li>วางโค้ดในไฟล์ 
+            <label class="block text-xs font-bold text-slate-700 mb-1.5">Google Apps Script Web App URL:</label>
+            <input type="text" id="gasUrlInput" placeholder="[https://script.google.com/macros/s/.../exec"](https://script.google.com/macros/s/.../exec") class="w-full border border-slate-300 rounded-xl p-3 text-xs font-mono focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+            <span class="text-[11px] text-slate-400 block mt-1">วาง Web App URL ที่ลงท้ายด้วย 
