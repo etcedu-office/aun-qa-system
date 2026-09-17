@@ -369,3 +369,20 @@
             <label class="block text-xs font-bold text-slate-700 mb-1.5">Google Apps Script Web App URL:</label>
             <input type="text" id="gasUrlInput" placeholder="[https://script.google.com/macros/s/.../exec"](https://script.google.com/macros/s/.../exec") class="w-full border border-slate-300 rounded-xl p-3 text-xs font-mono focus:ring-2 focus:ring-emerald-500 focus:outline-none">
             <span class="text-[11px] text-slate-400 block mt-1">วาง Web App URL ที่ลงท้ายด้วย 
+      <div class="flex flex-wrap gap-3 pt-1">
+        <button onclick="saveGasUrl()" class="px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold hover:bg-emerald-700 transition shadow-xs">
+          บันทึกการตั้งค่า URL
+        </button>
+        <button onclick="testGasConnection()" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-xl text-xs font-bold hover:bg-slate-200 transition">
+          ทดสอบการเชื่อมต่อ Google Sheet
+        </button>
+      </div>
+
+      <div id="connectionStatus" class="text-xs font-bold"></div>
+
+      <!-- Quick instructions -->
+      <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs text-slate-600 space-y-2 mt-4">
+        <p class="font-bold text-slate-800">📌 ขั้นตอนการติดตั้งสคริปต์ใน Google Sheets:</p>
+        <ol class="list-decimal list-inside space-y-1 leading-relaxed">
+          <li>สร้าง Google Sheet แล้วไปที่เมนู <strong>ส่วนขยาย (Extensions) > Apps Script</strong></li>
+          <li>วางโค้ดในไฟล์ 
